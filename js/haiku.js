@@ -1,4 +1,4 @@
-class Haiku {
+export class Haiku {
   constructor(poem) {
     this.poem = poem;
   }
@@ -18,4 +18,4 @@ class Haiku {
     }
   }
 }
- exports.haikuModule=Haiku;
+ // exports.haikuModule=Haiku;
