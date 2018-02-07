@@ -11,7 +11,7 @@ var babelify = require("babelify");
 
 
 gulp.task('jsBrowserify', function() {
-  return browserify({ entries: ['./js/haiku.js']})
+  return browserify({ entries: ['./js/haiku-interface.js']})
     .transform(babelify.configure({
       presets: ["es2015"]
     }))

@@ -1,6 +1,25 @@
 (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
 "use strict";
 
+var _haiku = require("./../js/haiku.js");
+
+$(document).ready(function () {
+  $("#userInput").submit(function (event) {
+    event.preventDefault();
+    var poem = $("#poem").val();
+
+    var haiku = new _haiku.Haiku(poem);
+    if (haiku.check()) {
+      $(".output").text("this is a haiku");
+    } else {
+      $(".output").text("this is NOT a haiku");
+    }
+  });
+});
+
+},{"./../js/haiku.js":2}],2:[function(require,module,exports){
+'use strict';
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -17,8 +36,18 @@ var Haiku = exports.Haiku = function () {
   }
 
   _createClass(Haiku, [{
-    key: "check",
+    key: 'check',
     value: function check() {
+      if (this.checkLines()) {
+        if (this.checkSyllables()) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }, {
+    key: 'checkLines',
+    value: function checkLines() {
       var lines = this.poem.split("");
       var count = 0;
       for (var i = 0; i < lines.length; i++) {
@@ -31,6 +60,68 @@ var Haiku = exports.Haiku = function () {
       } else {
         return false;
       }
+    }
+  }, {
+    key: 'checkSyllables',
+    value: function checkSyllables() {
+      // debugger;
+
+      this.poem = this.poem.toLowerCase();
+      var vowels = ['a', 'e', 'y', 'u', 'i', 'o'];
+      var exceptions = ['s', 'c', 'x', 'g', 'z'];
+      var lines = this.poem.split("\n");
+
+      var wordSliced = "";
+      var requiredAmountOfSyllables = [5, 7, 5];
+      for (var i = 0; i < lines.length; i++) {
+        var syllables = 0;
+        // console.log(lines[i]);
+        var words = lines[i].split(" ");
+        for (var j = 0; j < words.length; j++) {
+          // console.log(words[j]);
+          wordSliced = words[j];
+          if (words[j].endsWith("less")) {
+            syllables = syllables + 1;
+            wordSliced = words[j].slice(0, words[j].length - 4);
+          }
+          if (words[j].endsWith("ful")) {
+            syllables = syllables + 1;
+            wordSliced = words[j].slice(0, words[j].length - 3);
+          }
+          // old words, where le sounds like an 'el'
+          if (words[j].endsWith("ble")) {
+            syllables = syllables + 1;
+          } else if (words[j].endsWith("e")) {
+            // silent e at the end of a word
+            wordSliced = words[j].slice(0, words[j].length - 1);
+          }
+          // plural form with a silent e
+          if (words[j].endsWith("es")) {
+            if (!exceptions.includes(words[j].charAt(words[j].length - 3))) {
+              wordSliced = words[j].slice(0, words[j].length - 2);
+            }
+          }
+          var letters = wordSliced.split("");
+          // console.log(letters);
+          var isPreviousLetterAVowel = false;
+          for (var k = 0; k < letters.length; k++) {
+
+            if (vowels.includes(letters[k]) && isPreviousLetterAVowel === false) {
+              // console.log("if: vowel; f=false");
+              isPreviousLetterAVowel = true;
+              syllables = syllables + 1;
+            } else if (!vowels.includes(letters[k])) {
+              // console.log("if: consonant;");
+              isPreviousLetterAVowel = false;
+            } else {}
+          }
+          // console.log(syllables);
+        }
+        if (syllables != requiredAmountOfSyllables[i]) {
+          return false;
+        }
+      }
+      return true;
     }
   }]);
 

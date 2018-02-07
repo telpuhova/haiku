@@ -2,9 +2,26 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel='stylesheet' <href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <!-- <link rel="stylesheet" href="css/styles.css" type="text/css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="build/js/app.js"></script>
     <title>Haiku checker</title>
   </head>
   <body>
-
+    <h2>Haiku</h2>
+    <h3>Please type in a haiku</h3>
+    <!-- <form id = "userInput">
+      <input id= "poem" type="textarea" class="form-control">
+      <button type="submit">Haiku!</button>
+    </form> -->
+    <form id = "userInput">
+      <textarea id="poem" name="poem" rows="10" cols="30">In a pouch I grow,
+On a southern continent
+Strange creatures I know.</textarea>
+      <br>
+      <input type="submit">
+    </form>
+    <p class="output"></p>
   </body>
 </html>

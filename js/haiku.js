@@ -3,6 +3,15 @@ export class Haiku {
     this.poem = poem;
   }
 
+  check() {
+    if (this.checkLines()) {
+      if (this.checkSyllables()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   checkLines() {
     let lines = this.poem.split("");
     let count = 0;
@@ -30,10 +39,10 @@ export class Haiku {
     const requiredAmountOfSyllables = [5, 7, 5];
     for (let i=0; i<lines.length; i++) {
       let syllables = 0;
-      console.log(lines[i]);
+      // console.log(lines[i]);
       let words = lines[i].split(" ");
       for (let j=0; j<words.length; j++) {
-        console.log(words[j]);
+        // console.log(words[j]);
         wordSliced = words[j];
         if (words[j].endsWith("less")) {
           syllables = syllables + 1;
@@ -56,22 +65,22 @@ export class Haiku {
           }
         }
         let letters = wordSliced.split("");
-        console.log(letters);
+        // console.log(letters);
         let isPreviousLetterAVowel = false;
         for (let k=0; k<letters.length; k++) {
 
           if (vowels.includes(letters[k]) && (isPreviousLetterAVowel === false)) {
-            console.log("if: vowel; f=false");
+            // console.log("if: vowel; f=false");
             isPreviousLetterAVowel = true;
             syllables = syllables + 1;
           } else if (!vowels.includes(letters[k])) {
-            console.log("if: consonant;");
+            // console.log("if: consonant;");
             isPreviousLetterAVowel = false;
           } else {
 
           }
         }
-        console.log(syllables);
+        // console.log(syllables);
       }
       if (syllables != requiredAmountOfSyllables[i]) {
         return false;
