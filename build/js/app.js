@@ -72,10 +72,10 @@ var Haiku = exports.Haiku = function () {
           // old words, where le sounds like an 'el'
           if (words[j].endsWith("ble")) {
             syllables = syllables + 1;
-          } else if (words[j].endsWith("e")) {
-            // silent e at the end of a word
-            wordSliced = words[j].slice(0, words[j].length - 1);
           }
+          // } else if (words[j].endsWith("e")) {// silent e at the end of a word
+          //   wordSliced = words[j].slice(0, (words[j].length - 1));
+          // }
           // plural form with a silent e
           if (words[j].endsWith("es")) {
             if (!exceptions.includes(words[j].charAt(words[j].length - 3))) {
@@ -85,19 +85,26 @@ var Haiku = exports.Haiku = function () {
           var letters = wordSliced.split("");
           // console.log(letters);
           var isPreviousLetterAVowel = false;
+          var syllablesInAWord = 0;
           for (var k = 0; k < letters.length; k++) {
 
             if (vowels.includes(letters[k]) && isPreviousLetterAVowel === false) {
               // console.log("if: vowel; f=false");
               isPreviousLetterAVowel = true;
               syllables = syllables + 1;
+              syllablesInAWord = syllablesInAWord + 1;
             } else if (!vowels.includes(letters[k])) {
               // console.log("if: consonant;");
               isPreviousLetterAVowel = false;
             } else {}
           }
-          // console.log(syllables);
+          if (words[j].endsWith("e") && syllablesInAWord > 1) {
+            // silent e at the end of a word, accountong for "THE"
+            syllables = syllables - 1;
+          }
+          console.log(words[j] + " - " + syllablesInAWord);
         }
+        console.log(i + 1 + " - " + syllables);
         if (syllables != requiredAmountOfSyllables[i]) {
           return false;
         }
