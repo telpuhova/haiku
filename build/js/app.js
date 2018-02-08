@@ -1,4 +1,114 @@
 (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.HaikuCreator = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _haiku = require("./../js/haiku.js");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var HaikuCreator = exports.HaikuCreator = function () {
+  function HaikuCreator() {
+    _classCallCheck(this, HaikuCreator);
+
+    this.haiku = "";
+
+    // 0-5 1 syll
+    // 5-10 2 syll
+    // 10-15 3 syll
+    this.nouns = ["life", "heart", "king", "dog", "pond", "autumn", "sunset", "moonlight", "water", "mountain", "tenderness", "happiness", "adventure", "energy", "melody"];
+    //no 3 syll words
+    this.verbs = ["runs", "floats", "sings", "creeps", "moves", "travels", "begins", "remains", "adores", "follows"];
+    this.adjectives = ["cold", "warm", "dark", "light", "small", "dancing", "changing", "breaking", "swaying", "silver", "beautiful", "courageous", "natural", "different", "lovable"];
+    this.adverbs = ["high", "low", "deep", "late", "high", "softly", "lightly", "swaying", "away", "upward", "balancing", "forever", "easily", "endlessly", "honestly"];
+    this.prepositions = [];
+  }
+
+  _createClass(HaikuCreator, [{
+    key: "createBase",
+    value: function createBase() {
+      var randomNounNumber = Math.floor(Math.random() * 15);
+      var randomVerbNumber = Math.floor(Math.random() * 10);
+      var haikuLine = "";
+      haikuLine = this.nouns[randomNounNumber] + " " + this.verbs[randomVerbNumber];
+      console.log(haikuLine);
+      return haikuLine;
+    }
+  }, {
+    key: "addAdjective",
+    value: function addAdjective(line, syllablesNeeded) {
+      var randomNumberFromZeroToFive = Math.floor(Math.random() * 5);
+      var randomAdjectiveNumber = randomNumberFromZeroToFive + (syllablesNeeded - 1) * 5;
+      line = this.adjectives[randomAdjectiveNumber] + " " + line;
+      console.log("---------------" + line);
+      console.log(syllablesNeeded + " -- " + this.adjectives[randomAdjectiveNumber]);
+      return line;
+    }
+  }, {
+    key: "addAdverb",
+    value: function addAdverb(line, syllablesNeeded) {
+      var randomNumberFromZeroToFive = Math.floor(Math.random() * 5);
+      var randomAdverbNumber = randomNumberFromZeroToFive + (syllablesNeeded - 1) * 5;
+      line = line + " " + this.adverbs[randomAdverbNumber];
+      console.log("---------------" + line);
+      console.log(syllablesNeeded + " -- " + this.adverbs[randomAdverbNumber]);
+      return line;
+    }
+  }, {
+    key: "create",
+    value: function create() {
+      var requiredAmountOfSyllables = [5, 7, 5];
+      var haiku = new _haiku.Haiku();
+      for (var i = 0; i < 3; i++) {
+        var line = "";
+        line = line + this.createBase();
+
+        var syllablesNeeded = requiredAmountOfSyllables[i] - haiku.checkSyllablesInALine(line);
+
+        if (syllablesNeeded > 0) {
+          var randomZeroOrOne = Math.floor(Math.random() * 2); // decide if we will get an adjective or an adverb
+
+          if (syllablesNeeded <= 3) {
+            //adds extra word only ONCE
+            if (randomZeroOrOne) {
+              line = this.addAdjective(line, syllablesNeeded);
+            } else {
+              line = this.addAdverb(line, syllablesNeeded);
+            }
+          } else if (syllablesNeeded > 3) {
+            //adds extra word TWICE
+            if (randomZeroOrOne) {
+              line = this.addAdjective(line, 3);
+            } else {
+              line = this.addAdverb(line, 3);
+            }
+            syllablesNeeded = requiredAmountOfSyllables[i] - haiku.checkSyllablesInALine(line);
+            if (randomZeroOrOne) {
+              line = this.addAdverb(line, syllablesNeeded);
+            } else {
+              line = this.addAdjective(line, syllablesNeeded);
+            }
+          }
+        }
+
+        //line is ready
+        this.haiku = this.haiku + line + '\n';
+      }
+      this.haiku = this.haiku.slice(0, this.haiku.length - 1);
+      console.log(this.haiku);
+      return this.haiku;
+    }
+  }]);
+
+  return HaikuCreator;
+}();
+
+},{"./../js/haiku.js":2}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29,6 +139,7 @@ var Haiku = exports.Haiku = function () {
   }, {
     key: 'checkLines',
     value: function checkLines() {
+      this.poem = this.poem.trim();
       var lines = this.poem.split("");
       var count = 0;
       for (var i = 0; i < lines.length; i++) {
@@ -68,6 +179,10 @@ var Haiku = exports.Haiku = function () {
         if (words[j].endsWith("ble")) {
           syllables = syllables + 1;
         }
+        if (words[j].endsWith("ing") && vowels.includes(words[j].charAt(words[j].length - 4))) {
+          syllables = syllables + 1;
+        }
+        // console.log("helloo - " + vowels);
         // } else if (words[j].endsWith("e")) {// silent e at the end of a word
         //   wordSliced = words[j].slice(0, (words[j].length - 1));
         // }
@@ -114,8 +229,7 @@ var Haiku = exports.Haiku = function () {
 
         // console.log((i+1) + " - " + syllables);
         if (syllablesInALine != requiredAmountOfSyllables[i]) {
-          console.log("syllablesInALine: " + syllablesInALine);
-          console.log("requiredAmountOfSyllables[i]: " + requiredAmountOfSyllables[i]);
+          console.log(lines[i] + " - " + syllablesInALine);
           return false;
         }
       }
@@ -127,10 +241,12 @@ var Haiku = exports.Haiku = function () {
 }();
 // exports.haikuModule=Haiku;
 
-},{}],2:[function(require,module,exports){
-"use strict";
+},{}],3:[function(require,module,exports){
+'use strict';
 
-var _haiku = require("./../js/haiku.js");
+var _haiku = require('./../js/haiku.js');
+
+var _haikuCreator = require('./../js/haiku-creator.js');
 
 $(document).ready(function () {
   $("#userInput").submit(function (event) {
@@ -144,6 +260,14 @@ $(document).ready(function () {
       $(".output").text("this is NOT a haiku");
     }
   });
+  $("#generate").click(function () {
+    var generatedHaiku = new _haikuCreator.HaikuCreator();
+    var computerPoem = generatedHaiku.create();
+    // $("#poem").append(computerPoem);
+
+    var textarea = $("#poem");
+    textarea.val(textarea.val() + "\n" + computerPoem + "\n");
+  });
 });
 
-},{"./../js/haiku.js":1}]},{},[2]);
+},{"./../js/haiku-creator.js":1,"./../js/haiku.js":2}]},{},[3]);

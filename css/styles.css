@@ -32,3 +32,8 @@ input {
   background-color: rgba(164, 219, 249, 0.5);
   /*width: 500px;*/
 }
+
+#generate {
+  width: 200px;
+  height: 50px;
+}

@@ -13,6 +13,7 @@ export class Haiku {
   }
 
   checkLines() {
+    this.poem = this.poem.trim();
     let lines = this.poem.split("");
     let count = 0;
     for (let i = 0; i < lines.length; i++){
@@ -51,6 +52,10 @@ export class Haiku {
       if (words[j].endsWith("ble")) {
         syllables =syllables + 1;
       }
+      if (words[j].endsWith("ing") && vowels.includes(words[j].charAt(words[j].length - 4))) {
+        syllables = syllables + 1;
+      }
+      // console.log("helloo - " + vowels);
       // } else if (words[j].endsWith("e")) {// silent e at the end of a word
       //   wordSliced = words[j].slice(0, (words[j].length - 1));
       // }
@@ -98,6 +103,7 @@ export class Haiku {
 
       // console.log((i+1) + " - " + syllables);
       if (syllablesInALine != requiredAmountOfSyllables[i]) {
+        console.log(lines[i] + " - " + syllablesInALine);
         return false;
       }
     }
