@@ -39,6 +39,7 @@ gulp.task('jsBrowserify',['concat'], function() {
     .pipe(source('app.js'))
     .pipe(gulp.dest('./build/js'))
 });
+
 gulp.task('concat', function() {
   return gulp.src(['./js/haiku-interface.js'])
   .pipe(concat('allConcat.js'))
