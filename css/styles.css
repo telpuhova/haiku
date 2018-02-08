@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-  align-items:center;
+  align-items: center;
   margin-top: 10%;
   text-align: center;
 }
@@ -19,4 +19,16 @@ input {
 
 .output {
   font-size: 30pt;
+  /*width: 500px;*/
+  /*text-align: center;*/
+  /*background-color: lightblue;*/
+}
+
+.result {
+
+  margin-left: 38%;
+  margin-right: 38%;
+  margin-top: 1%;
+  background-color: rgba(164, 219, 249, 0.5);
+  /*width: 500px;*/
 }
