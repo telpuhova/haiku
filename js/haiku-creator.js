@@ -20,10 +20,10 @@ export class HaikuCreator {
   createBase() {
     let randomNounNumber = Math.floor(Math.random() * 15);
     let randomVerbNumber = Math.floor(Math.random() * 10);
-    let haikuLine = "";
-    haikuLine = this.nouns[randomNounNumber] + " " +this.verbs[randomVerbNumber];
-    console.log(haikuLine);
-    return haikuLine;
+    let line = "";
+    line = this.nouns[randomNounNumber] + " " +this.verbs[randomVerbNumber];
+    console.log(line);
+    return line;
   }
 
   addAdjective(line, syllablesNeeded) {
@@ -57,21 +57,21 @@ export class HaikuCreator {
         let randomZeroOrOne = Math.floor(Math.random() * 2); // decide if we will get an adjective or an adverb
 
         if (syllablesNeeded <= 3) { //adds extra word only ONCE
-          if (randomZeroOrOne) {
+          if (randomZeroOrOne === 1) {
             line = this.addAdjective(line, syllablesNeeded);
-          } else {
+          } else if (randomZeroOrOne === 0){
             line = this.addAdverb(line, syllablesNeeded);
           }
 
-        } else if (syllablesNeeded > 3) { //adds extra word TWICE
+        } else if (syllablesNeeded > 3) { //adds extra word TWICE - either adj or adverb
           if (randomZeroOrOne) {
             line = this.addAdjective(line, 3);
           } else {
             line = this.addAdverb(line, 3);
           }
-          syllablesNeeded = requiredAmountOfSyllables[i] - haiku.checkSyllablesInALine(line);
+          syllablesNeeded = requiredAmountOfSyllables[i] - haiku.checkSyllablesInALine(line); // line 66-78 all together
           if (randomZeroOrOne) {
-            line = this.addAdverb(line, syllablesNeeded);
+            line = this.addAdverb(line, syllablesNeeded);// always need line and syllablesNeeded argument
           } else {
             line = this.addAdjective(line, syllablesNeeded);
           }
@@ -79,9 +79,9 @@ export class HaikuCreator {
       }
 
       //line is ready
-      this.haiku = this.haiku + line + '\n';
+      this.haiku = this.haiku + line + '\n'; // adds line each time
     }
-    this.haiku = this.haiku.slice(0, this.haiku.length - 1);
+    this.haiku = this.haiku.slice(0, this.haiku.length - 1); // cuts off extra \n at end of third line 
     console.log(this.haiku);
     return this.haiku;
   }

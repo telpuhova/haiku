@@ -12,8 +12,8 @@ export class Haiku {
     return false;
   }
 
-  checkLines() {
-    this.poem = this.poem.trim();
+  checkLines() { //checking that there are three lines by keeping count of how many \n's there are. Count is a variable that starts at 0 and adds 1 to count index = \n
+    this.poem = this.poem.trim(); //eliminates space in textarea box
     let lines = this.poem.split("");
     let count = 0;
     for (let i = 0; i < lines.length; i++){
@@ -21,7 +21,7 @@ export class Haiku {
         count = count + 1;
       }
     }
-    if (count === 2) {
+    if (count === 2) { // there are two \n's here so this poem has three lines 
       return true;
     } else {
       return false;
