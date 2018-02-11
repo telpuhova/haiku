@@ -22,5 +22,6 @@ _Application can give wrong answer, when checking haiku poems with words of lati
 _HTML, CSS, JavaScript, Node, npm, gulp, jasmine, karma, Bootstrap, jQuery_
 
 ### License
+*This application is provided as-is under the MIT license.*
 
 Copyright (c) 2018 ****_Natalia Telpukhova & Kate Trahan_****
