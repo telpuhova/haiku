@@ -1,27 +1,27 @@
-# _haiku_
+# haiku
 
-#### _Haiku poems checker and creator, 2/8/2018_
+Haiku poems checker and creator, 2/8/2018
 
-#### By _**Natalia Telpukhova & Kate Trahan**_
+By **Natalia Telpukhova & Kate Trahan**
 
 ## Description
 
-_An application that can check your haiku, counting the syllables, as well as create it's own deep and inspiring haiku poems._
+An application that can check your haiku, counting the syllables, as well as create it's own deep and inspiring haiku poems.
 
 ## Setup
 
-* _clone repository_
-* _open index.html in browser_
+* clone repository
+* open index.html in browser
 
 ## Known bugs
 
-_Application can give wrong answer, when checking haiku poems with words of latin origin, like 'diabetes' or 'plague'._
+Application can give wrong answer, when checking haiku poems with words of latin origin, like 'diabetes' or 'plague'.
 
 ## Technologies Used
 
-_HTML, CSS, JavaScript, Node, npm, gulp, jasmine, karma, Bootstrap, jQuery_
+HTML, CSS, JavaScript, Node, npm, gulp, jasmine, karma, Bootstrap, jQuery
 
 ### License
 *This application is provided as-is under the MIT license.*
 
-Copyright (c) 2018 ****_Natalia Telpukhova & Kate Trahan_****
+Copyright (c) 2018 Natalia Telpukhova & Kate Trahan
